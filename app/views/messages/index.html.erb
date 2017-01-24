@@ -4,7 +4,11 @@
 <div class="ui segment">
  <% @messages.each do |message| %>
   <% if message.body %>
-   <% user = User.find(message.user_id) %>
+    <% if message.guy_id %>
+     <% user = Guy.find(message.guy_id) %>
+    <% else %>
+     <% user =  Girl.find(message.girl_id) %>
+    <% end %>
    <div class="item">
     <div class="content">
      <div class="header"><strong><%= user.name %></strong>     <%= message.message_time %></div>
@@ -23,7 +27,11 @@
  <div class="field">
    <%= f.text_area :body, class: "form-control" %>
  </div>
- <%= f.text_field :user_id, value: current_user.id, type: "hidden" %>
+ <% if current_user.instance_of? Guy %>
+ <%= f.text_field :guy_id, value: current_user.id, type: "hidden" %>
+ <% else %>
+ <%= f.text_field :girl_id, value: current_user.id, type: "hidden" %>
+ <% end %>
  <div>
    <%= f.submit "Add Reply", class: "ui blue labeled submit icon button" %>
  </div>

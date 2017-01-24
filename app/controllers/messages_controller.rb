@@ -13,7 +13,7 @@ def index
    @messages = @conversation.messages
   end
  if @messages.last
-  if @messages.last.user_id != current_user.id
+  if @messages.last.girl_id != current_user.id && @messages.last.guy_id != current_user.id
    @messages.last.read = true;
   end
  end
@@ -30,6 +30,6 @@ def create
 end
 private
  def message_params
-  params.require(:message).permit(:body, :user_id)
+  params.require(:message).permit(:body, :guy_id, :girl_id)
  end
 end
